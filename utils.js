@@ -11,15 +11,10 @@ var readFileByLine = function (filename, callback) {
 		else {
 			console.log(data.toString());
 			var toReturn = [];
-			var lineBegins = true;
 			for(var i = 0; i < data.toString().length ; i ++) {
-				if(lineBegins === true) {
-					var line = '';
-					lineBegins = false;
-				}
 				if(data.toString()[i] === '\n') {
 					toReturn.push(line);
-					lineBegins = true;
+					line = '';
 				} else {
 					line += data.toString()[i];
 				}
@@ -37,6 +32,7 @@ var writeFileByLine = function (filename, data, callback) {
 		for(var i = 0; i < data.length; i ++) {
 			toWrite += data[i] + '\n';
 		}
+		toWrite = toWrite.substring(0, toWrite.length - 1);
 		fs.writeFile(filename, toWrite, function(err) {
 			if(err) callback(err);
 			else callback(undefined);
